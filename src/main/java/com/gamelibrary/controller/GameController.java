@@ -35,21 +35,21 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameO.get());
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateGame (@PathVariable (value = "id") Long id,@RequestBody GameModel gameModel) {
-        Optional<GameModel> game0 = gameRepository.findById(id);
-        if(game0.isEmpty()) {
+    public ResponseEntity<Object> updateGame(@PathVariable (value = "id") Long id,@RequestBody GameModel gameModel) {
+        Optional<GameModel> gameO = gameRepository.findById(id);
+        if(gameO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found. ");
         }
-        BeanUtils.copyProperties(gameModel,game0.get());
-        return ResponseEntity.status(HttpStatus.OK).body(gameRepository.save(game0.get()));
+        BeanUtils.copyProperties(gameModel,gameO.get());
+        return ResponseEntity.status(HttpStatus.OK).body(gameRepository.save(gameO.get()));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOneGame (@PathVariable (value = "id") Long id) {
-        Optional<GameModel> game0 = gameRepository.findById((id));
-        if(game0.isEmpty()) {
+        Optional<GameModel> gameO = gameRepository.findById((id));
+        if(gameO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found. ");
         }
-        gameRepository.delete(game0.get());
+        gameRepository.delete(gameO.get());
         return ResponseEntity.status(HttpStatus.CREATED).body("deleted successfully. ");
     }
 
