@@ -1,10 +1,15 @@
 package com.gamelibrary.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,11 +26,18 @@ public class UserModel {
     private String nick;
     @Column(name = "pais",length = 20,nullable = false)
     private String country;
-    @Column(name = "idade",nullable = false)
-    private int age;
-    @Column(name = "saldo",nullable = false)
+    @Column(name = "data_nascimento",nullable = false)
+    @Temporal(TemporalType.DATE)
+    private LocalDate birth;
+    @Column(name = "saldo")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double balance;
-    @Column(name = "jogos",nullable = false)
+    @Column(name = "jogos")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int games;
+    @Column(name = "data_criacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime creationDate;
 
 }

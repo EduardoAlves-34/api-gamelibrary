@@ -3,6 +3,7 @@ package com.gamelibrary.controller;
 import com.gamelibrary.model.GameModel;
 import com.gamelibrary.model.UserModel;
 import com.gamelibrary.repository.UserRepository;
+import com.gamelibrary.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,40 +18,28 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @PostMapping()
     public ResponseEntity<UserModel> saveUser(@RequestBody UserModel userModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(userModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userModel));
     }
     @GetMapping()
     public ResponseEntity<List<UserModel>> getAllUser() {
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUser());
     }
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneUser(@PathVariable (value = "id") Long id) {
-        Optional<UserModel> userO = userRepository.findById(id);
-        if(userO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(userO.get());
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getOneUser(id));
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable (value = "id") Long id,@RequestBody UserModel userModel) {
-        Optional<UserModel> userO = userRepository.findById(id);
-        if(userO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
-        }
-        BeanUtils.copyProperties(userModel,userO.get());
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userO.get()));
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id,userModel));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOneUser(@PathVariable (value = "id") Long id) {
-        Optional<UserModel> userO = userRepository.findById((id));
-        if(userO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found. ");
-        }
-        userRepository.delete(userO.get());
+        userService.deleteOneUser(id);
         return ResponseEntity.status(HttpStatus.CREATED).body("deleted successfully. ");
     }
 

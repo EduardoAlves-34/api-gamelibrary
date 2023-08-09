@@ -40,7 +40,8 @@ public class GameController {
         if(gameO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found. ");
         }
-        BeanUtils.copyProperties(gameModel,gameO.get());
+        //BeanUtils.copyProperties(gameModel,gameO.get());
+        gameModel.setId(id);
         return ResponseEntity.status(HttpStatus.OK).body(gameRepository.save(gameO.get()));
     }
     @DeleteMapping("/{id}")
