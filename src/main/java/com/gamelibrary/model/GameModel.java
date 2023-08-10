@@ -27,13 +27,12 @@ public class GameModel {
     private String description;
     @Column(name = "data",nullable = false)
     @Temporal(TemporalType.DATE)
-    private LocalDate date;
+    private LocalDate releaseDate;
     @Column(name = "tamanho_gb",nullable = false)
     private Double sizeGB;
     @Column(name = "distribuidora",length = 50,nullable = false)
     private String distributor;
     @Column(name = "classificacao",nullable = false)
     private int classification;
-
 
 }

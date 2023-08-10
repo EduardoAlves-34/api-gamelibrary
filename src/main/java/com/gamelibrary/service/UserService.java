@@ -42,11 +42,9 @@ public class UserService {
 
     public Object updateUser(Long id,UserModel userModel) {
         Optional<UserModel> userO = userRepository.findById(id);
-
         if(userO.isEmpty()) {
             return "User not found.";
         }
-
         BeanUtils.copyProperties(userO.get(),userModel);
         return userRepository.save(userModel);
     }
