@@ -40,7 +40,7 @@ public class UserService {
         return userO.get();
     }
 
-    public Object updateUser( Long id,UserModel userModel) {
+    public Object updateUser(Long id,UserModel userModel) {
         Optional<UserModel> userO = userRepository.findById(id);
 
         if(userO.isEmpty()) {
