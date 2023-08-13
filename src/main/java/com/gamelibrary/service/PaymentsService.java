@@ -3,6 +3,8 @@ package com.gamelibrary.service;
 import com.gamelibrary.model.UserModel;
 import com.gamelibrary.model.dto.AddFundsRequestDTO;
 import com.gamelibrary.model.dto.AddFundsResponseDTO;
+import com.gamelibrary.model.dto.AddGameResquetDTO;
+import com.gamelibrary.repository.GameRepository;
 import com.gamelibrary.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class PaymentsService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    GameService gameService;
 
     public Object addFunds(Long id,AddFundsRequestDTO addFundsRequestDTO) {
         Optional<UserModel> userO = userRepository.findById(id);
@@ -29,5 +33,11 @@ public class PaymentsService {
         response.setDateTime(LocalDateTime.now());
         return response;
     }
+
+   // public String buyGame(AddGameResquetDTO addGameResquetDTO) {
+
+
+   // }
+
 
 }

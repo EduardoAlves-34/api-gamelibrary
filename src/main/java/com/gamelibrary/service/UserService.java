@@ -1,19 +1,15 @@
 package com.gamelibrary.service;
 
+import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.UserModel;
 import com.gamelibrary.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -32,29 +28,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Object getOneUser(Long id) {
-        Optional<UserModel> userO = userRepository.findById(id);
-        if (userO.isEmpty()) {
-            return "User not found. ";
+    public UserModel getOneUser(Long id) throws CustomException {
+        var user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
         }
-        return userO.get();
+        throw new CustomException("User not found. ");
     }
 
-    public Object updateUser(Long id,UserModel userModel) {
-        Optional<UserModel> userO = userRepository.findById(id);
-        if(userO.isEmpty()) {
-            return "User not found.";
-        }
-        BeanUtils.copyProperties(userO.get(),userModel);
+    public Object updateUser(Long id,UserModel userModel) throws CustomException {
+        var user = getOneUser(id);
+        BeanUtils.copyProperties(user,userModel);
         return userRepository.save(userModel);
     }
 
-    public String deleteOneUser(Long id) {
-        Optional<UserModel> userO = userRepository.findById((id));
-        if(userO.isEmpty()) {
-            return "User not found. ";
-        }
-        userRepository.delete(userO.get());
+    public String deleteOneUser(Long id) throws CustomException {
+        var user = getOneUser(id);
+        userRepository.delete(user);
         return "deleted successfully. ";
     }
 }

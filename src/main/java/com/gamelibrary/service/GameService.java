@@ -1,5 +1,6 @@
 package com.gamelibrary.service;
 
+import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.GameModel;
 import com.gamelibrary.repository.GameRepository;
 import org.springframework.beans.BeanUtils;
@@ -27,29 +28,23 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    public Object getOneGame(Long id) {
-        Optional<GameModel> gameO = gameRepository.findById(id);
-        if(gameO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found. ");
+    public GameModel getOneGame(Long id) throws CustomException {
+        var game = gameRepository.findById(id);
+        if(game.isPresent()) {
+            return game.get();
         }
-        return gameO.get();
+        throw new CustomException("Game not found. ");
     }
 
-    public Object updateGame(Long id,GameModel gameModel) {
-        Optional<GameModel> gameO = gameRepository.findById(id);
-        if(gameO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Game not found. ");
-        }
-        BeanUtils.copyProperties(gameO.get(),gameModel);
-        return gameRepository.save(gameO.get());
+    public GameModel updateGame(Long id,GameModel gameModel) throws CustomException {
+        var game = getOneGame(id);
+        BeanUtils.copyProperties(game,gameModel);
+        return gameRepository.save(game);
     }
 
-    public String deleteOneGame(Long id) {
-        Optional<GameModel> gameO = gameRepository.findById((id));
-        if(gameO.isEmpty()) {
-            return "Game not found. ";
-        }
-        gameRepository.delete(gameO.get());
+    public String deleteOneGame(Long id) throws CustomException {
+        var game = getOneGame((id));
+        gameRepository.delete(game);
         return "deleted successfully. ";
     }
 

@@ -1,5 +1,6 @@
 package com.gamelibrary.controller;
 
+import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.GameModel;
 import com.gamelibrary.model.UserModel;
 import com.gamelibrary.repository.UserRepository;
@@ -29,17 +30,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUser());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneUser(@PathVariable (value = "id") Long id) {
+    public ResponseEntity<Object> getOneUser(@PathVariable (value = "id") Long id) throws CustomException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getOneUser(id));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable (value = "id") Long id,@RequestBody UserModel userModel) {
+    public ResponseEntity<Object> updateUser(@PathVariable (value = "id") Long id,@RequestBody UserModel userModel) throws CustomException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id,userModel));
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteOneUser(@PathVariable (value = "id") Long id) {
-        userService.deleteOneUser(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body("deleted successfully. ");
+    public ResponseEntity<String> deleteOneUser(@PathVariable (value = "id") Long id) throws CustomException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.deleteOneUser(id));
     }
 
 }

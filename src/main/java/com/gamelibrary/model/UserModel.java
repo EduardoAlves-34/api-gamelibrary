@@ -29,7 +29,7 @@ public class UserModel {
     @Column(name = "data_nascimento",nullable = false)
     @Temporal(TemporalType.DATE)
     private LocalDate birth;
-    @Column(name = "saldo")
+    @Column(name = "saldo",nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Double balance;
     @Column(name = "jogos")
