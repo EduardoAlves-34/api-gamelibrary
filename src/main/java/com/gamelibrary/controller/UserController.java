@@ -23,7 +23,7 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<UserModel> saveUser(@RequestBody UserModel userModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveNewUser(userModel));
     }
     @GetMapping()
     public ResponseEntity<List<UserModel>> getAllUser() {

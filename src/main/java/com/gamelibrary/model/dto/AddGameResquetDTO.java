@@ -13,6 +13,4 @@ public class AddGameResquetDTO {
 
     private Long idUser;
 
-    private Double value;
-
 }
