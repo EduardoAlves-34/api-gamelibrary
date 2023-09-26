@@ -4,12 +4,13 @@ import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.UserModel;
 import com.gamelibrary.repository.UserRepository;
 import com.gamelibrary.utils.CustomBeanUtils;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class UserService {
@@ -31,8 +32,15 @@ public class UserService {
         return userRepository.save(userModel);
     }
 
-    public List<UserModel> getAllUser() {
-        return userRepository.findAll();
+    public Page<UserModel> getAllUser(
+            int page,
+            int size) {
+        PageRequest pageRequest = PageRequest.of(
+                page,
+                size,
+                Sort.Direction.ASC,
+                "id");
+        return userRepository.searchAll(pageRequest);
     }
 
     public UserModel getOneUser(Long id) throws CustomException {
@@ -40,7 +48,7 @@ public class UserService {
         if (user.isPresent()) {
             return user.get();
         }
-        throw new CustomException("User not found. ");
+        throw new CustomException("User not found. ",404);
     }
 
     public UserModel updateUser(Long id, UserModel userModel) throws CustomException {
@@ -57,4 +65,19 @@ public class UserService {
         userRepository.delete(user);
         return "deleted successfully. ";
     }
+
+
+
+//    public Page<UserModel> findAll() {
+//        int page = 0;
+//        int size = 10;
+//        PageRequest pageRequest = PageRequest.of(
+//                page,
+//                size,
+//                Sort.Direction.ASC);
+//        return new PageImpl<>(
+//                userRepository.findAll(),
+//                pageRequest, size);
+//    }
+
 }

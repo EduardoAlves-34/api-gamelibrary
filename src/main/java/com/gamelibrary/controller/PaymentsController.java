@@ -2,8 +2,9 @@ package com.gamelibrary.controller;
 
 import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.UserModel;
-import com.gamelibrary.model.dto.AddFundsRequestDTO;
-import com.gamelibrary.model.dto.AddGameResquetDTO;
+import com.gamelibrary.model.dto.*;
+import com.gamelibrary.model.dto.AddGameRequestDTO;
+import com.gamelibrary.model.dto.AddGameRequestDTO;
 import com.gamelibrary.service.PaymentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,13 @@ public class PaymentsController {
     }
 
     @PostMapping("/buygame/user")
-    public UserModel buyGame(@RequestBody AddGameResquetDTO addGameResquetDTO) throws CustomException {
-        System.out.println("REQUESTE" + addGameResquetDTO.getIdGame()+ addGameResquetDTO.getIdUser());
-        return paymentsService.buyGame(addGameResquetDTO);
+    public UserModel buyGame(@RequestBody AddGameRequestDTO addGameRequestDTO) throws CustomException {
+        return paymentsService.buyGame(addGameRequestDTO);
+    }
+
+    @PostMapping("/buygame/user/gift")
+    public UserModel buyGiftGame(@RequestBody AddGiftGameRequestDTO addGiftGameRequestDTO) throws CustomException {
+        return paymentsService.buyGiftGame(addGiftGameRequestDTO);
     }
 
 

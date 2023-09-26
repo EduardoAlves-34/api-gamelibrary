@@ -1,19 +1,18 @@
 package com.gamelibrary.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity(name = "jogo")
-@Data
 public class GameModel {
 
     @Id
@@ -23,8 +22,6 @@ public class GameModel {
     private String name;
     @Column(name = "valor",nullable = false)
     private Double value;
-    @Column(name = "genero",length = 20,nullable = false)
-    private String gender;
     @Column(name = "descricao",length = 100,nullable = false)
     private String description;
     @Column(name = "data",nullable = false)
@@ -36,5 +33,9 @@ public class GameModel {
     private String distributor;
     @Column(name = "classificacao",nullable = false)
     private int classification;
+
+    @ManyToMany
+    @JoinTable(name = "genero_jogos", joinColumns = @JoinColumn(name = "jogo_id"),inverseJoinColumns = @JoinColumn(name = "genero_id"))
+    private List<GenderModel> listgames = new ArrayList<>();
 
 }

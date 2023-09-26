@@ -4,6 +4,7 @@ import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.GameModel;
 import com.gamelibrary.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,14 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.CREATED).body(gameService.saveGame(gameModel));
     }
     @GetMapping()
-    public ResponseEntity<List<GameModel>> getAllGame() {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGame());
+    public Page<GameModel> getAllGame(@RequestParam(
+            value = ("page"),required = false,defaultValue = "0")int page, @RequestParam(
+            value = ("size"),required = false,defaultValue = "10") int size){
+        return gameService.getAllGame(page,size);
+    }
+    @GetMapping("/filter")
+    public ResponseEntity<List<GameModel>> getAllGameByFilter(@RequestParam(name = "filter",required = false) String filter) throws CustomException {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGameByFilter(filter));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneGame(@PathVariable (value = "id") Long id) throws CustomException {

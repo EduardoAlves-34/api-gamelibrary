@@ -2,7 +2,6 @@ package com.gamelibrary.controller;
 
 import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.dto.ErrorDTO;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,11 +17,12 @@ public class HandlerController extends ResponseEntityExceptionHandler {
         var error = new ErrorDTO();
 
         error.setMsg(customException.getMessage());
-        error.setCode(404);
+        error.setCode(customException.getStatusCode());
         error.setTimesTamp(LocalDateTime.now());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(customException.getStatusCode()).body(error);
     }
+
 
 
 }

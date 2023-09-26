@@ -1,18 +1,13 @@
 package com.gamelibrary.controller;
 
 import com.gamelibrary.exception.CustomException;
-import com.gamelibrary.model.GameModel;
 import com.gamelibrary.model.UserModel;
-import com.gamelibrary.repository.UserRepository;
 import com.gamelibrary.service.UserService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -26,8 +21,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveNewUser(userModel));
     }
     @GetMapping()
-    public ResponseEntity<List<UserModel>> getAllUser() {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUser());
+    public Page<UserModel> getAllUser(@RequestParam(
+            value = ("page"),required = false,defaultValue = "0")int page, @RequestParam(
+            value = ("size"),required = false,defaultValue = "10") int size) {
+        return userService.getAllUser(page,size);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneUser(@PathVariable (value = "id") Long id) throws CustomException {

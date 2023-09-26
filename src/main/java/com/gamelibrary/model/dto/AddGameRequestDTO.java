@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AddGameResquetDTO {
+public class AddGameRequestDTO {
 
     private Long idGame;
 

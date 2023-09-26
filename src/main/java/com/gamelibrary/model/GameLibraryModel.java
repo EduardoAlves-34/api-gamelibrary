@@ -1,12 +1,9 @@
 package com.gamelibrary.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +19,7 @@ public class GameLibraryModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jogo_id")
     private GameModel game;
+    //@JoinColumn(name = "")
+    //private UserModel giftBy;
 
 }
