@@ -3,7 +3,7 @@ package com.gamelibrary.service;
 import com.gamelibrary.exception.CustomException;
 import com.gamelibrary.model.GameModel;
 import com.gamelibrary.repository.GameRepository;
-import com.gamelibrary.repository.GenderGameModelRepository;
+import com.gamelibrary.repository.GenderGameRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public class GameService {
     GameRepository gameRepository;
 
     @Autowired
-    GenderGameModelRepository genderGameModelRepository;
+    GenderGameRepository genderGameRepository;
 
     public GameModel saveGame(GameModel gameModel ) {
         return gameRepository.save(gameModel);
@@ -38,8 +38,9 @@ public class GameService {
     }
 
     public List<GameModel> getAllGameByFilter(String filter) throws CustomException {
-        genderGameModelRepository.findtest();
-        throw new CustomException("Tipo de Filtro invalido . ", 404);
+        var filterlist = genderGameRepository.findGameByGender(filter);
+        return filterlist;
+        //throw new CustomException("Tipo de Filtro invalido . ", 404);
     }
 
     public GameModel getOneGame(Long id) throws CustomException {

@@ -1,5 +1,6 @@
 package com.gamelibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,30 +13,30 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "jogo")
+@Entity
+@Table(name = "jogo")
 public class GameModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome",length = 50,nullable = false)
+    @Column(name = "nome", length = 50, nullable = false)
     private String name;
-    @Column(name = "valor",nullable = false)
+    @Column(name = "valor", nullable = false)
     private Double value;
-    @Column(name = "descricao",length = 100,nullable = false)
+    @Column(name = "descricao", length = 100, nullable = false)
     private String description;
-    @Column(name = "data",nullable = false)
+    @Column(name = "data", nullable = false)
     @Temporal(TemporalType.DATE)
     private LocalDate releaseDate;
-    @Column(name = "tamanho_gb",nullable = false)
+    @Column(name = "tamanho_gb", nullable = false)
     private Double sizeGB;
-    @Column(name = "distribuidora",length = 50,nullable = false)
+    @Column(name = "distribuidora", length = 50, nullable = false)
     private String distributor;
-    @Column(name = "classificacao",nullable = false)
+    @Column(name = "classificacao", nullable = false)
     private int classification;
 
-    @ManyToMany
-    @JoinTable(name = "genero_jogos", joinColumns = @JoinColumn(name = "jogo_id"),inverseJoinColumns = @JoinColumn(name = "genero_id"))
-    private List<GenderModel> listgames = new ArrayList<>();
+    @ManyToMany(mappedBy = "games")
+    private List<GenderModel> gender;
 
 }

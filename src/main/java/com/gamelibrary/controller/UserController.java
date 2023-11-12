@@ -1,7 +1,9 @@
 package com.gamelibrary.controller;
 
 import com.gamelibrary.exception.CustomException;
+import com.gamelibrary.model.GameLibraryModel;
 import com.gamelibrary.model.UserModel;
+import com.gamelibrary.repository.GameLibrary;
 import com.gamelibrary.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    GameLibrary gameLibrary;
 
     @PostMapping()
     public ResponseEntity<UserModel> saveUser(@RequestBody UserModel userModel) {
@@ -30,6 +34,11 @@ public class UserController {
     public ResponseEntity<Object> getOneUser(@PathVariable (value = "id") Long id) throws CustomException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getOneUser(id));
     }
+    @GetMapping("/historic")
+    public ResponseEntity<GameLibraryModel> getPurchaseHistory() {
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable (value = "id") Long id,@RequestBody UserModel userModel) throws CustomException {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id,userModel));

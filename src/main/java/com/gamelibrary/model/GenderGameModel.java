@@ -3,12 +3,13 @@ package com.gamelibrary.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
+
+import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "genero_jogos")
+@Entity
+@Table(name = "genero_jogos")
 public class GenderGameModel {
 
     @Id
@@ -22,6 +23,5 @@ public class GenderGameModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genero_id")
     private GenderModel gender;
-
 
 }

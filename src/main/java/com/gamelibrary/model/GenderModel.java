@@ -1,5 +1,6 @@
 package com.gamelibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "genero")
+@Entity
+@Table(name = "genero")
+@JsonIgnoreProperties({"games","hibernateLazyInitializer","handler"})
 public class GenderModel {
 
     @Id
@@ -19,5 +22,11 @@ public class GenderModel {
 
     @Column(name = "nome",length = 50,nullable = false)
     private String name;
+
+    @ManyToMany
+    @JoinTable(name = "genero_jogos",
+            joinColumns = @JoinColumn(name = "genero_id"),
+            inverseJoinColumns = @JoinColumn(name = "jogo_id"))
+    List<GameModel> games;
 
 }

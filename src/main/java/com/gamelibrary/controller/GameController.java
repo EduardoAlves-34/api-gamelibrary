@@ -31,6 +31,7 @@ public class GameController {
     }
     @GetMapping("/filter")
     public ResponseEntity<List<GameModel>> getAllGameByFilter(@RequestParam(name = "filter",required = false) String filter) throws CustomException {
+        filter.equalsIgnoreCase(filter);
         return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGameByFilter(filter));
     }
     @GetMapping("/{id}")

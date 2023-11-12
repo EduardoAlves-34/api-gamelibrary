@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity(name = "biblioteca_jogos")
@@ -19,6 +22,25 @@ public class GameLibraryModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "jogo_id")
     private GameModel game;
+    @Column(name = "valor")
+    private Double value;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data")
+    private LocalDateTime date;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //@JoinColumn(name = "")
     //private UserModel giftBy;
 

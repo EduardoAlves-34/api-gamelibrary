@@ -41,8 +41,9 @@ public class UserModel {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime creationDate;
     @ManyToMany
-    @JoinTable(name = "biblioteca_jogos", joinColumns = @JoinColumn(name = "usuario_id"),inverseJoinColumns = @JoinColumn(name = "jogo_id"))
+    @JoinTable(name = "biblioteca_jogos",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "jogo_id"))
     private List<GameModel> listgames = new ArrayList<>();
-
 
 }
